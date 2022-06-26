@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Form } from 'react-bootstrap';
 
-function App() {
+const App = () => {
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [meaningOfSearchTerm, setMeaningOfSearchTerm] = useState('');
+
+  useEffect(() => {
+    document.getElementById("google_translate_element").textContent = meaningOfSearchTerm;
+  }, [meaningOfSearchTerm]);
+
+  const handleSetSearchTerm = (e) => {
+    setSearchTerm(() => {
+      return e.target.value;
+    });
+  }
+
+  const searchGoogleTranslate = () => {
+    setMeaningOfSearchTerm(() => {
+      return searchTerm;
+    });
+  }
+
+  const addToList = () => {
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Form onSubmit={(e) => e.preventDefault()}>
+        <Form.Group className="mb-3" controlId="searchterm">
+          <Form.Label>Search Term</Form.Label>
+          <Form.Control type="text" placeholder="Payment" onChange={handleSetSearchTerm} />
+        </Form.Group>
+      </Form>
+      <div id="google_translate_element"></div>
+      <Button variant="outline-primary" onClick={searchGoogleTranslate}>Find Meaning</Button>{' '}
+      <Button variant="outline-primary" onClick={addToList}>Add to List</Button>{' '}
+    </>
+  )
 }
 
 export default App;
