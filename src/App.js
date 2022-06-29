@@ -10,6 +10,8 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [meaningOfSearchTerm, setMeaningOfSearchTerm] = useState('');
   const [list, setList] = useState([]); //contains list of dictionary objects
+  const [fromLanguage, setFromLanguage] = useState('fi');
+  const [toLanguage, setToLanguage] = useState('en');
   const input = useRef();
 
   useEffect(() => {
@@ -26,14 +28,22 @@ const App = () => {
     });
   }
 
-  const searchGoogleTranslate = () => {
+  const searchGoogleTranslate = async () => {
+    const fetched = await fetch(`
+      https://api.mymemory.translated.net/get?
+      q=${searchTerm}!&
+      langpair=${fromLanguage}|${toLanguage}`
+    );
+    const data = await fetched.json();
+    const result = data.responseData.translatedText;
     setMeaningOfSearchTerm(() => {
-      return searchTerm;
+      return result;
     });
   }
 
   const addToList = () => {
-    if (meaningOfSearchTerm.length === 0) return notify();
+    if (searchTerm.length === 0) return notifyForSearchTerm();
+    if (meaningOfSearchTerm.length === 0) return notifyForMeaning();
     setList(() => {
       return [...list, {searchTerm, meaningOfSearchTerm}];
     });
@@ -45,8 +55,12 @@ const App = () => {
     })
   }
 
-  const notify = () => {
-    toast("First search for the meaning!");
+  const notifyForSearchTerm =() => {
+    toast("At least give me something to search for!");
+  }
+
+  const notifyForMeaning = () => {
+    toast("Do I conjure up the meaning on my own?");
   }
 
   return (
