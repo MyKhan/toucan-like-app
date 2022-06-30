@@ -13,6 +13,10 @@
   margin: 10px 0px;
 }
 
-.dropdown {
-  display: inline;
+.language-selection-boxes {
+  width: 500px;
+}
+
+.language-selection-box {
+  width: 40%;
 }

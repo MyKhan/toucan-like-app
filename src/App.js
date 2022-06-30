@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
 
 const App = () => {
 
@@ -14,6 +15,12 @@ const App = () => {
   const [toLanguage, setToLanguage] = useState('en');
   const input = useRef();
 
+  const options = [
+    { value: 'fi', label: 'Finnish' },
+    { value: 'en', label: 'English' },
+    { value: 'fr', label: 'French' }
+  ]
+
   useEffect(() => {
     document.getElementById("google_translate_element").textContent = meaningOfSearchTerm;
   }, [meaningOfSearchTerm]);
@@ -21,6 +28,13 @@ const App = () => {
   useEffect(() => {
     console.log(list);
   }, [list]);
+
+  const updateLanguage = (fromto, language) => {
+    if (fromto === 'from') {
+      setFromLanguage (() => language)
+     } else {setToLanguage (() => language)}
+     console.log(fromto, language)
+  }
 
   const handleSetSearchTerm = (e) => {
     setSearchTerm(() => {
@@ -75,27 +89,13 @@ const App = () => {
           <Form.Control value={searchTerm} type="text" placeholder="Payment" ref={input} onChange={handleSetSearchTerm} />
         </Form.Group>
       </Form>
-      <div className="dropdown">
-        <button className="btn btn-secondary btn-sm dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Language From
-        </button>
-        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a className="dropdown-item" href="#">English</a>
-          <a className="dropdown-item" href="#">Finnish</a>
-          <a className="dropdown-item" href="#">French</a>
-          <a className="dropdown-item" href="#">Spanish</a>
-        </div>
-      </div>
-      <div className="dropdown">
-        <button className="btn btn-secondary btn-sm dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Language To
-        </button>
-        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a className="dropdown-item" href="#">English</a>
-          <a className="dropdown-item" href="#">Finnish</a>
-          <a className="dropdown-item" href="#">French</a>
-          <a className="dropdown-item" href="#">Spanish</a>
-        </div>
+      <div className='language-selection-boxes'>
+        <Select className='language-selction-box' options={options} onChange={(e) => {
+          updateLanguage('from', e.value)
+        }} />
+        <Select className='language-selction-box' options={options} onChange={(e) => {
+          updateLanguage('to', e.value)
+        }} />
       </div>
       <div id="google_translate_element"></div>
       <Button variant="outline-primary" onClick={searchGoogleTranslate}>Find Meaning</Button>{' '}
