@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select';
+import List from './components/List';
 
 const App = () => {
 
@@ -77,10 +78,6 @@ const App = () => {
     toast("Do I conjure up the meaning on my own?");
   }
 
-  const selectLanguage = () => {
-    console.log("Yes");
-  }
-
   return (
     <>
       <Form onSubmit={(e) => e.preventDefault()}>
@@ -104,6 +101,7 @@ const App = () => {
         position="top-left"
         theme="dark"
       />
+      <List list={list} />
     </>
   )
 }
