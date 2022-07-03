@@ -1,24 +1,27 @@
 import React from "react";
 
-const ListItem = ({ list, index }) => {
+const ListItem = ({ list }) => {
   return (
     <>
-      {console.log(list)}
       <div>
         {list.length === 0 ? null : (
           <table>
-            <tr>
-              <th>Search Term</th>
-              <th>Meaning</th>
-            </tr>
-            {list.map((item) => {
-              return (
-                <tr data-index={index}>
-                  <td>{item.searchTerm}</td>
-                  <td>{item.meaningOfSearchTerm}</td>
-                </tr>
-              );
-            })}
+            <thead>
+              <tr>
+                <th>Search Term</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map((item, id) => {
+                return (
+                  <tr key={id}>
+                    <td>{item.searchTerm}</td>
+                    <td>{item.meaningOfSearchTerm}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         )}
       </div>
