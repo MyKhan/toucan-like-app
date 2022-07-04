@@ -13,9 +13,9 @@ const ListItem = ({ list }) => {
               </tr>
             </thead>
             <tbody>
-              {list.map((item, id) => {
+              {list.map((item, index) => {
                 return (
-                  <tr key={id}>
+                  <tr key={index}>
                     <td>{item.searchTerm}</td>
                     <td>{item.meaningOfSearchTerm}</td>
                   </tr>
